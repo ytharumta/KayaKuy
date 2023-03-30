@@ -35,7 +35,7 @@ func (b *userHandler) RedirectHandler(c *gin.Context) {
 		"github": {
 			"clientID":     os.Getenv("CLIENT_ID_GITHUB"),
 			"clientSecret": os.Getenv("CLIENT_SECRET_GITHUB"),
-			"redirectURL":  "http://localhost:8080/api/v1/auth/github/callback",
+			"redirectURL":  "https://kayakuy-production.up.railway.app/api/v1/auth/github/callback",
 		},
 	}
 
