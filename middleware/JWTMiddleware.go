@@ -28,6 +28,7 @@ func checkJWT() gin.HandlerFunc {
 			})
 
 			if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+				fmt.Println(claims["user_id"])
 				c.Set("jwt_user_id", claims["user_id"])
 				c.Set("jwt_user_role", claims["user_role"])
 			} else {
