@@ -20,7 +20,7 @@ func NewReportRepo(db *sql.DB) *reportRepository {
 }
 
 func (a *reportRepository) GetReportHistory(UserID int64) (err error, results []models.History) {
-	sql := `SELECT je.code, je.note, c.name to_from, a.name account, je.transaction_type, coalesce(je.value,0) value, je.created_at FROM journal_entries je
+	sql := `SELECT je.code, je.note, c.name to_from, a.name account, je.transaction_type, coalesce(je.value,0) jvalue, je.created_at FROM journal_entries je
          join customers c on c.id = je.customer_id
          join accounts a on a.id = je.account_id
          join users u on u.id = je.user_id
