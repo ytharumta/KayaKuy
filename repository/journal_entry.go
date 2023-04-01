@@ -3,7 +3,6 @@ package repository
 import (
 	"KayaKuy/models"
 	"database/sql"
-	"fmt"
 )
 
 type JournalRepository interface {
@@ -45,7 +44,6 @@ func (a *journalRepository) GetAllJournal(UserID int64) (err error, results []mo
 }
 
 func (a *journalRepository) InsertJournal(journal models.Journal_entry) (err error) {
-	fmt.Println(journal.UserID)
 	sql := "INSERT INTO journal_entries (code, customer_id, account_id, value, note, user_id, transaction_type, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7, now())"
 
 	errs := a.db.QueryRow(sql, journal.Code, journal.CustomerId, journal.AccountId, journal.Value, journal.Note, journal.UserID, journal.TransactionType)

@@ -20,7 +20,7 @@ func NewReportRepo(db *sql.DB) *reportRepository {
 }
 
 func (a *reportRepository) GetReportHistory(UserID int64) (err error, results []models.History) {
-	sql := `SELECT je.code, je.note, c.name to_from, a.name account, je.transaction_type, je.value, je.created_at FROM journal_entries je
+	sql := `SELECT je.code, je.note, c.name to_from, a.name account, je.transaction_type, coalesce(je.value,0) value, je.created_at FROM journal_entries je
          join customers c on c.id = je.customer_id
          join accounts a on a.id = je.account_id
          join users u on u.id = je.user_id
@@ -70,7 +70,7 @@ func (a *reportRepository) GetReportAccountBalance(UserID int64) (err error, res
 }
 
 func (a *reportRepository) GetReportTotal(UserID int64) (err error, results []models.Total) {
-	sql := `select sum(total_debit) total_debit, sum(total_kredit) total_kredit, (sum(total_kredit)/sum(total_debit)*100) percentage,
+	sql := `select coalesce(sum(total_debit),0) total_debit, coalesce(sum(total_kredit),0) total_kredit, coalesce((sum(total_kredit)/sum(total_debit)*100),0) percentage,
    case 
    	when (sum(total_kredit)/sum(total_debit)*100) <= 10 then 'HEMAT! PERTAHANKAN'
    	when (sum(total_kredit)/sum(total_debit)*100) < 50 and (sum(total_kredit)/sum(total_debit)*100) >= 20 then 'JANGAN TERLALU BOROS!'
