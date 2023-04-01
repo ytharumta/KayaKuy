@@ -4,7 +4,6 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"encoding/base64"
-	"fmt"
 )
 
 var bytes = []byte{35, 46, 57, 24, 85, 35, 24, 74, 87, 35, 88, 98, 66, 32, 14, 05}
@@ -41,7 +40,6 @@ func Decrypt(text, mySecret string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	fmt.Println(text)
 	cipherText := Decode(text)
 	cfb := cipher.NewCFBDecrypter(block, bytes)
 	plainText := make([]byte, len(cipherText))

@@ -75,7 +75,7 @@ func (b *userService) Register(inputUser models.User) error {
 func (b *userService) Login(inputUser models.User, user *models.User) error {
 
 	email := inputUser.Email
-	password, err := helper.Decrypt(inputUser.Password, os.Getenv("SECRET"))
+	password, err := helper.Encrypt(inputUser.Password, os.Getenv("SECRET"))
 	if err != nil {
 		return err
 	}
