@@ -44,7 +44,7 @@ func (a *reportRepository) GetReportHistory(UserID int64) (err error, results []
 }
 
 func (a *reportRepository) GetReportAccountBalance(UserID int64) (err error, results []models.AccountBalance) {
-	sql := `select a."name" account_name, coalesce(je1.total,0) total_debit, coalesce(je2.total,0) total_kredit, (je1.total - je2.total) total from accounts a 
+	sql := `select a."name" account_name, coalesce(je1.total,0) total_debit, coalesce(je2.total,0) total_kredit, coalesce((je1.total - je2.total),0) total from accounts a 
     left join (
     	select sum(je.value) total, je.user_id, je.account_id, je.transaction_type from journal_entries je group by je.account_id, je.user_id, je.transaction_type
     ) je1 on je1.account_id = a.id and je1.transaction_type = 'Debit'
